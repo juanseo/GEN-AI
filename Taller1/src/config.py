@@ -1,9 +1,13 @@
 """Configuración central del asistente de EcoMarket.
 
 Carga la API key desde un archivo `.env`, buscándolo hacia arriba desde este
-paquete. Se aceptan dos nombres de variable porque el `.env` del curso usa
-`OPENAI-API-KEY` (con guiones) mientras que la convención del SDK es
-`OPENAI_API_KEY`.
+paquete. Soporta dos proveedores que exponen la misma API (la de OpenAI):
+
+- `ollama` (por defecto): modelos open-source en Ollama Cloud, con
+  `OLLAMA_API_KEY`. El taller permite explícitamente un modelo open-source para
+  la Fase 3.
+- `openai`: modelos de OpenAI, con `OPENAI_API_KEY` (o `OPENAI-API-KEY`, el
+  nombre con guiones que usa el `.env` del curso).
 """
 
 from __future__ import annotations
@@ -19,8 +23,38 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 
-# Nombres de variable aceptados, en orden de prioridad.
-API_KEY_NAMES = ("OPENAI_API_KEY", "OPENAI-API-KEY")
+# Proveedor de inferencia: "ollama" (Ollama Cloud) u "openai".
+PROVEEDOR = os.environ.get("ECOMARKET_PROVEEDOR", "ollama").strip().lower()
+
+# Por proveedor: variables de la API key (en orden de prioridad), URL base del
+# endpoint compatible con OpenAI, modelo de generación por defecto y ajustes de
+# razonamiento. Los modelos de Ollama Cloud (glm, gpt-oss) razonan: los tokens
+# que "piensan" cuentan contra max_tokens, así que sin margen extra el router
+# (8 tokens) y la llamada a herramientas (200) se quedan sin espacio y devuelven
+# texto vacío.
+PROVEEDORES = {
+    "ollama": {
+        "api_key_names": ("OLLAMA_API_KEY",),
+        "base_url": "https://ollama.com/v1",
+        "modelo": "glm-5.3-flash",
+        "esfuerzo_razonamiento": "low",
+        "margen_razonamiento": 1024,
+    },
+    "openai": {
+        "api_key_names": ("OPENAI_API_KEY", "OPENAI-API-KEY"),
+        "base_url": None,
+        "modelo": "gpt-4o-mini",
+        "esfuerzo_razonamiento": None,
+        "margen_razonamiento": 0,
+    },
+}
+if PROVEEDOR not in PROVEEDORES:
+    raise ValueError(
+        f"ECOMARKET_PROVEEDOR={PROVEEDOR!r} no es válido; usa 'ollama' u 'openai'."
+    )
+
+# Nombres de variable aceptados para el proveedor activo.
+API_KEY_NAMES = PROVEEDORES[PROVEEDOR]["api_key_names"]
 
 
 def _buscar_archivos_env() -> list[Path]:
@@ -51,11 +85,26 @@ def cargar_api_key() -> str | None:
 class Config:
     """Parámetros de ejecución del asistente."""
 
-    # Modelo de generación. El taller permite cualquier modelo; usamos un
-    # modelo pequeño y económico porque el 80% del tráfico es repetitivo.
-    modelo: str = os.environ.get("ECOMARKET_MODELO", "gpt-4o-mini")
+    # Proveedor activo y URL del endpoint (None = la de OpenAI).
+    proveedor: str = PROVEEDOR
+    base_url: str | None = PROVEEDORES[PROVEEDOR]["base_url"]
 
-    # Modelo de embeddings, usado solo si motor_retrieval == "openai".
+    # Modelo de generación. Con Ollama, glm-5.3-flash: open-source, con buen
+    # soporte de function calling y el más rápido y económico en tokens de los
+    # probados (gpt-oss:120b da respuestas equivalentes con ~50% más salida).
+    # Con OpenAI, gpt-4o-mini: pequeño y económico porque el 80% del tráfico es
+    # repetitivo.
+    modelo: str = os.environ.get("ECOMARKET_MODELO", PROVEEDORES[PROVEEDOR]["modelo"])
+
+    # Solo para modelos de razonamiento: esfuerzo pedido (None = no se envía) y
+    # tokens extra que se suman al max_tokens de cada llamada para el
+    # razonamiento, de modo que los límites de la cadena sigan midiendo solo
+    # la respuesta visible.
+    esfuerzo_razonamiento: str | None = PROVEEDORES[PROVEEDOR]["esfuerzo_razonamiento"]
+    margen_razonamiento: int = PROVEEDORES[PROVEEDOR]["margen_razonamiento"]
+
+    # Modelo de embeddings, usado solo si motor_retrieval == "openai" y el
+    # proveedor es openai.
     modelo_embeddings: str = os.environ.get(
         "ECOMARKET_MODELO_EMBEDDINGS", "text-embedding-3-small"
     )

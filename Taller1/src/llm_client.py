@@ -1,7 +1,9 @@
-"""Cliente del LLM (OpenAI) con conteo de tokens y estimación de costo.
+"""Cliente del LLM (Ollama Cloud u OpenAI) con conteo de tokens y estimación de costo.
 
 Se aísla aquí toda la dependencia del proveedor para que cambiar de modelo o de
-proveedor no obligue a tocar la cadena de prompts.
+proveedor no obligue a tocar la cadena de prompts. Ollama Cloud expone un
+endpoint compatible con la API de OpenAI, así que el mismo SDK sirve para ambos:
+solo cambian la URL base, la API key y el nombre del modelo.
 """
 
 from __future__ import annotations
@@ -11,7 +13,7 @@ from typing import Any
 
 from openai import OpenAI
 
-from .config import CONFIG
+from .config import API_KEY_NAMES, CONFIG
 
 
 class ApiKeyFaltante(RuntimeError):
@@ -21,7 +23,8 @@ class ApiKeyFaltante(RuntimeError):
 # Precios de lista de referencia en USD por 1 millón de tokens.
 # OJO: son valores de referencia a la fecha del taller; verificar siempre los
 # precios vigentes en https://openai.com/api/pricing/ antes de usarlos en un
-# caso de negocio real.
+# caso de negocio real. Los modelos de Ollama Cloud se cobran por suscripción,
+# no por token: no tienen precio aquí y su costo se reporta como 0.
 PRECIOS_USD_POR_MILLON = {
     "gpt-4o-mini": {"entrada": 0.15, "salida": 0.60},
     "gpt-4o": {"entrada": 2.50, "salida": 10.00},
@@ -61,17 +64,17 @@ class Uso:
 
 
 class ClienteLLM:
-    """Envoltura delgada sobre el SDK de OpenAI."""
+    """Envoltura delgada sobre el SDK de OpenAI (sirve también para Ollama)."""
 
     def __init__(self, modelo: str | None = None) -> None:
         api_key = CONFIG.api_key
         if not api_key:
             raise ApiKeyFaltante(
-                "No se encontró la API key. Define OPENAI_API_KEY (o "
-                "OPENAI-API-KEY) en el entorno o en un archivo .env en este "
-                "directorio o en alguno superior."
+                f"No se encontró la API key del proveedor '{CONFIG.proveedor}'. "
+                f"Define {' o '.join(API_KEY_NAMES)} en el entorno o en un "
+                "archivo .env en este directorio o en alguno superior."
             )
-        self._cliente = OpenAI(api_key=api_key)
+        self._cliente = OpenAI(api_key=api_key, base_url=CONFIG.base_url)
         self.modelo = modelo or CONFIG.modelo
         self.uso = Uso()
 
@@ -88,8 +91,10 @@ class ClienteLLM:
             "model": self.modelo,
             "messages": mensajes,
             "temperature": CONFIG.temperatura if temperatura is None else temperatura,
-            "max_tokens": max_tokens,
+            "max_tokens": max_tokens + CONFIG.margen_razonamiento,
         }
+        if CONFIG.esfuerzo_razonamiento:
+            kwargs["reasoning_effort"] = CONFIG.esfuerzo_razonamiento
         if herramientas:
             kwargs["tools"] = herramientas
             kwargs["tool_choice"] = "auto"
@@ -108,7 +113,7 @@ class ClienteLLM:
         return (self.completar(mensajes, **kwargs).content or "").strip()
 
     def embeddings(self, textos: list[str]) -> list[list[float]]:
-        """Genera embeddings. Solo se usa con ECOMARKET_RETRIEVAL=openai."""
+        """Genera embeddings. Solo con ECOMARKET_RETRIEVAL=openai y proveedor openai."""
         respuesta = self._cliente.embeddings.create(
             model=CONFIG.modelo_embeddings, input=textos
         )

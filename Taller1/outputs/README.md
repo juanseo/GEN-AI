@@ -11,12 +11,14 @@ Para generarlo:
 ```bash
 cd Taller1
 pip install -r requirements.txt
-cp .env.example .env     # y completa OPENAI_API_KEY
+cp .env.example .env     # y completa OLLAMA_API_KEY
 python -m scripts.demo_fase3
 ```
 
-La corrida completa hace ~22 llamadas al API con `gpt-4o-mini` y cuesta del
-orden de **USD 0,01**. El script imprime el costo exacto al terminar.
+La corrida completa hace ~24 llamadas a `glm-5.3-flash` en Ollama Cloud y tarda
+alrededor de un minuto. Ollama Cloud cobra por suscripción, no por token, así
+que el costo aparece como 0; con `ECOMARKET_PROVEEDOR=openai` (`gpt-4o-mini`)
+cuesta del orden de **USD 0,01** y el script imprime el costo exacto al terminar.
 
 > Si solo quieres inspeccionar la capa de RAG sin consumir tokens ni configurar
 > la API key, usa `python -m scripts.demo_retrieval`.

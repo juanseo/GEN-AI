@@ -57,12 +57,23 @@ cp .env.example .env
 Y edita el `.env`:
 
 ```
-OPENAI_API_KEY=sk-...
+OLLAMA_API_KEY=...
 ```
 
-> El código acepta tanto `OPENAI_API_KEY` como `OPENAI-API-KEY`, y busca el
-> archivo `.env` en este directorio y en todos los directorios superiores, así
-> que un `.env` ya existente en la raíz del curso también funciona.
+> Por defecto la inferencia corre **en línea en Ollama Cloud** con el modelo
+> open-source `glm-5.3-flash` (la API key se crea en https://ollama.com/settings/keys).
+> El taller permite explícitamente un modelo open-source para la Fase 3. Ollama
+> Cloud expone un endpoint compatible con la API de OpenAI, así que el mismo
+> código funciona con OpenAI cambiando dos variables:
+>
+> ```
+> ECOMARKET_PROVEEDOR=openai        # usa OPENAI_API_KEY (o OPENAI-API-KEY) y gpt-4o-mini
+> ECOMARKET_MODELO=gpt-oss:120b     # cualquier otro modelo del proveedor activo
+> ```
+>
+> El código busca el archivo `.env` en este directorio y en todos los
+> directorios superiores, así que un `.env` ya existente en la raíz del curso
+> también funciona.
 
 ### 3. Ejecutar
 

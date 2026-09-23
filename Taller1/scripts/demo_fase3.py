@@ -165,7 +165,7 @@ def main() -> int:
         "",
         "> Salida generada automáticamente por `scripts/demo_fase3.py`.",
         f"> Fecha de ejecución: {datetime.now():%Y-%m-%d %H:%M}  ",
-        f"> Modelo: `{CONFIG.modelo}` · Motor de retrieval: `{asistente.base.motor}` · "
+        f"> Proveedor: `{CONFIG.proveedor}` · Modelo: `{CONFIG.modelo}` · Motor de retrieval: `{asistente.base.motor}` · "
         f"Fragmentos indexados: {len(asistente.base)}",
         "",
         "En cada caso se ejecuta la **misma consulta** con dos prompts distintos. "
@@ -205,10 +205,9 @@ def main() -> int:
             ]
     except AuthenticationError:
         print(
-            "\n[ERROR] OpenAI rechazó la API key (401). La clave se leyó "
-            "correctamente del .env, pero no es válida o fue revocada.\n"
-            "Genera una nueva en https://platform.openai.com/api-keys y "
-            "actualiza el archivo .env.\n",
+            f"\n[ERROR] El proveedor '{CONFIG.proveedor}' rechazó la API key "
+            "(401). La clave se leyó del .env, pero no es válida o fue "
+            "revocada. Genera una nueva y actualiza el archivo .env.\n",
             file=sys.stderr,
         )
         return 1
@@ -225,7 +224,9 @@ def main() -> int:
         f"- Costo estimado: **USD {asistente.costo_sesion_usd:.5f}**",
         "",
         "> El costo se calcula con los precios de referencia declarados en "
-        "`src/llm_client.py`. Verificar los precios vigentes antes de extrapolar.",
+        "`src/llm_client.py`. Verificar los precios vigentes antes de extrapolar. "
+        "Los modelos de Ollama Cloud se cobran por suscripción, no por token, "
+        "por lo que su costo aparece como 0.",
         "",
     ]
 

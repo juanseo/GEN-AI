@@ -110,9 +110,9 @@ def main() -> int:
             respuesta = asistente.responder(entrada, modo=modo)
         except AuthenticationError:
             print(
-                "\n[ERROR] OpenAI rechazo la API key (401). La clave se leyo del "
-                ".env pero no es valida o fue revocada. Genera una nueva en "
-                "https://platform.openai.com/api-keys y actualiza el .env.\n",
+                f"\n[ERROR] El proveedor '{CONFIG.proveedor}' rechazo la API key "
+                "(401). La clave se leyo del .env pero no es valida o fue "
+                "revocada. Genera una nueva y actualiza el .env.\n",
                 file=sys.stderr,
             )
             return 1

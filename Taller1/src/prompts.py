@@ -213,10 +213,10 @@ Responde solo con la etiqueta, en mayúsculas, sin explicación ni puntuación.
 
 Categorías:
 - ESTADO_PEDIDO: pregunta dónde está su pedido, cuándo llega, o da un número de seguimiento.
-- DEVOLUCION: quiere devolver, cambiar o cancelar un producto, o pregunta por el reembolso.
+- DEVOLUCION: quiere devolver, cambiar o cancelar un producto, o pregunta por el reembolso. Incluye el producto que llegó dañado o defectuoso cuando el cliente pide reposición, cambio o reembolso.
 - PRODUCTO: pregunta por características, materiales, precios o disponibilidad.
 - ENVIO: pregunta por tiempos, costos, cobertura o zonas de entrega, sin referirse a un pedido puntual.
-- QUEJA: expresa molestia, reclamo, daño, problema de cobro o menciona acciones legales.
+- QUEJA: expresa molestia o reclamo sin una solicitud de devolución concreta, reporta un problema de cobro o menciona acciones legales.
 - OTRO: cualquier otra cosa.
 
 Mensaje del cliente:

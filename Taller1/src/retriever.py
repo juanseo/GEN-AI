@@ -207,7 +207,11 @@ class BaseConocimiento:
         self._bm25 = BM25([_normalizar(t) for t in textos])
 
         self.motor = CONFIG.motor_retrieval
-        if self.motor == "openai" and cliente_llm is not None:
+        if (
+            self.motor == "openai"
+            and CONFIG.proveedor == "openai"
+            and cliente_llm is not None
+        ):
             # Embeddings reales: la búsqueda vectorial captura sinónimos
             # ("me arrepentí" ~ "retracto") que TF-IDF no alcanza.
             self._matriz = np.array(cliente_llm.embeddings(textos))
