@@ -1,0 +1,5 @@
+# Dependencias del asistente de EcoMarket - Taller 1, Sesion 2
+openai>=1.40
+python-dotenv>=1.0
+scikit-learn>=1.3
+numpy>=1.26
