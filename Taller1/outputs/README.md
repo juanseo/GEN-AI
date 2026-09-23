@@ -9,7 +9,7 @@ Este directorio recibe las transcripciones que generan los scripts.
 Para generarlo:
 
 ```bash
-cd Entregables/sesion2
+cd Taller1
 pip install -r requirements.txt
 cp .env.example .env     # y completa OPENAI_API_KEY
 python -m scripts.demo_fase3
