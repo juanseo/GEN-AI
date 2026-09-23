@@ -24,6 +24,10 @@ los agentes humanos, a quienes el sistema **escala por reglas deterministas** y
 asiste con un copiloto. El conocimiento vive **fuera del modelo**, por lo que
 actualizar una política es editar un documento, no reentrenar.
 
+La implementación ejecutable de la Fase 3 usa en ese mismo lugar el modelo
+open-source **`glm-5.3-flash`**, servido en línea por Ollama Cloud. Así se
+demuestra que la arquitectura no depende del proveedor (Fase 1, sección 4.4).
+
 ---
 
 ## Entregables por fase

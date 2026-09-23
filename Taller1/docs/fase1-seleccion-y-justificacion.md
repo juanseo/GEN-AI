@@ -97,6 +97,10 @@ La Opción C, más dos decisiones que el caso exige explícitamente:
 > económica) como motor del Nivel 1, orquestado por un sistema RAG con búsqueda
 > híbrida y re-ranking, más *function calling* hacia el OMS. `gpt-4o` (modelo de
 > gama alta) se reserva para el Nivel 2, como copiloto del agente humano.
+>
+> **Modelo de la implementación (Fase 3):** `glm-5.3-flash`, un LLM
+> open-source de la misma gama, servido en línea por Ollama Cloud. Ocupa
+> exactamente el lugar de `gpt-4o-mini` en la arquitectura; ver la sección 4.4.
 
 ### 4.1 Por qué no un solo modelo para todo
 
@@ -192,6 +196,59 @@ Meter los pedidos en la base vectorial sería el error de diseño más costoso d
 este proyecto: además de ser impreciso, obligaría a vectorizar datos personales
 de clientes y a replicarlos fuera del sistema transaccional.
 
+### 4.4 El modelo de la implementación: `glm-5.3-flash` (open-source)
+
+El taller permite usar un modelo open-source para la Fase 3, y lo aprovechamos
+para poner a prueba la tesis de la sección 4.1: si el dato correcto llega en el
+prompt, **un modelo de gama económica basta, sea propietario o abierto**. El
+código ejecutable usa `glm-5.3-flash`, servido por Ollama Cloud, en todos los
+puntos donde la arquitectura dice `gpt-4o-mini`: router, *function calling* y
+generación del Nivel 1.
+
+Lo elegimos por los mismos criterios de la sección 2, contrastado con
+`gpt-oss:120b` (el otro candidato open-source evaluado) sobre los 8 casos de
+`outputs/ejecucion_fase3.md`:
+
+| Criterio | `glm-5.3-flash` | `gpt-oss:120b` |
+|---|---|---|
+| Calidad (RNF-1) | Clasifica bien las 8 consultas, invoca `consultar_pedido` con el argumento correcto y todas sus respuestas pasan la verificación de anclaje | Equivalente: mismas clasificaciones y respuestas |
+| Tokens de salida en la corrida | **2.619** | 4.014 (~50% más) |
+| Latencia de la corrida completa | **~45 s** | Varios minutos |
+| Integración (RNF-2) | Endpoint compatible con la API de OpenAI: mismo SDK y mismo código | Igual |
+
+La diferencia no está en la calidad sino en la eficiencia: `glm-5.3-flash`
+razona menos para llegar a la misma respuesta, y en un sistema cuyo costo escala
+con cada consulta eso es lo que decide.
+
+Esto tiene tres consecuencias para la decisión:
+
+1. **La portabilidad de la sección 5.4 está demostrada, no solo afirmada.**
+   Pasar de `gpt-4o-mini` a `glm-5.3-flash` solo exigió tocar la capa del
+   proveedor (`src/config.py` y `src/llm_client.py`): la URL del endpoint, la
+   API key y el margen de razonamiento del punto 3. La cadena de prompts, el
+   retriever y los guardrails no se tocaron. Desde entonces, cambiar de modelo
+   o de proveedor es cambiar dos variables de entorno (`ECOMARKET_PROVEEDOR`,
+   `ECOMARKET_MODELO`).
+2. **Un modelo abierto es una alternativa real para producción.** Reduce el
+   *vendor lock-in* y, si se auto-hospeda, permite que los datos de los clientes
+   no salgan de la infraestructura de EcoMarket, lo cual pesa en el análisis de
+   privacidad de la Fase 2. El precio es asumir la operación del modelo, que es
+   justo la desventaja de escalabilidad que la sección 5.3 señala para las
+   opciones auto-hospedadas.
+3. **Los modelos de razonamiento imponen un ajuste de ingeniería.**
+   `glm-5.3-flash` "piensa" antes de responder, y esos tokens cuentan contra el
+   límite de salida. El router, que responde una sola palabra con un límite de
+   8 tokens, devolvía una cadena vacía hasta que se agregó un margen de tokens
+   para el razonamiento (`src/config.py`). Es la clase de detalle que solo
+   aparece al ejecutar, y la razón por la que la hoja de ruta de la sección 7
+   empieza con un copiloto interno.
+
+Mantenemos `gpt-4o-mini` como recomendación para la primera versión en
+producción porque su costo por token es público y permite el cálculo de la
+sección 5.2. Ollama Cloud cobra por suscripción, no por token, así que el costo
+de `glm-5.3-flash` a escala debe cotizarse, o estimarse como costo de GPU si se
+auto-hospeda, antes de compararlo en igualdad de condiciones.
+
 ---
 
 ## 5. Justificación por criterio
@@ -277,9 +334,12 @@ se conecta directamente con la discusión de impacto laboral de la Fase 2.
   no una migración. Actualizar la política es editar el documento y reindexar:
   minutos, no días. Esto es lo que cumple RNF-5.
 - **Portabilidad del proveedor.** Toda la dependencia del proveedor está aislada
-  en `src/llm_client.py`. Cambiar a un modelo open-source auto-hospedado, o a
-  otro proveedor, es reimplementar una clase de ~100 líneas: la cadena de
-  prompts, el retriever y los guardrails no se tocan. Esto evita el
+  en `src/llm_client.py` y `src/config.py`. Cambiar a otro proveedor que exponga
+  la API de OpenAI (Ollama, vLLM, la mayoría de los servicios de modelos
+  abiertos) es cambiar la configuración; uno que no la exponga exige
+  reimplementar una clase de ~100 líneas. En ambos casos, la cadena de prompts,
+  el retriever y los guardrails no se tocan. Así se hizo en la Fase 3, que corre
+  sobre el modelo open-source `glm-5.3-flash` (sección 4.4). Esto evita el
   *vendor lock-in*, que es la objeción legítima más fuerte contra elegir un
   modelo propietario.
 - **Latencia.** El router gasta ~1 token de salida; la búsqueda híbrida corre en
@@ -301,6 +361,7 @@ no tiene esa propiedad: para corregir un dato mal aprendido hay que reentrenar.
 |---|---|---|
 | Router de intención | `gpt-4o-mini`, temp. 0, salida de 1 token | Clasificar 6 categorías no requiere un modelo grande; el costo marginal es despreciable |
 | Generación Nivel 1 | `gpt-4o-mini`, temp. 0,2 | Calidad suficiente cuando el contexto es correcto; 17× más barato que la gama alta |
+| Router + Nivel 1 en la implementación (Fase 3) | `glm-5.3-flash` (open-source, Ollama Cloud), temp. 0,2 | Misma calidad que `gpt-oss:120b` con ~35% menos tokens de salida; demuestra la portabilidad de la arquitectura |
 | Embeddings | `text-embedding-3-small` | Costo casi nulo, dimensionalidad manejable, calidad suficiente para un corpus de este tamaño |
 | Búsqueda | Híbrida: vectorial (HNSW) + BM25, con re-ranking | Recupera tanto sinónimos como identificadores exactos |
 | Base vectorial | pgvector sobre el PostgreSQL existente | Evita introducir un sistema nuevo; migrable a Pinecone/Azure AI Search si el corpus crece |
