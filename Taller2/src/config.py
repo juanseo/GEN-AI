@@ -2,9 +2,9 @@
 
 Agrupa en un solo lugar las tres decisiones que el resto del código consume:
 
-- **LLM de generación** (`ECOMARKET_PROVEEDOR`): `openai` (`gpt-4o-mini`, por
-  defecto en este taller) u `ollama` (`glm-5.3-flash` en Ollama Cloud, el
-  modelo de la Fase 3 del Taller 1). Ambos exponen la API de OpenAI.
+- **LLM de generación** (`ECOMARKET_PROVEEDOR`): `ollama` (`glm-5.3-flash` en
+  Ollama Cloud, el modelo de la Fase 3 del Taller 1, por defecto en este
+  taller) u `openai` (`gpt-4o-mini`). Ambos exponen la API de OpenAI.
 - **Modelo de embeddings** (`ECOMARKET_EMBEDDINGS`): ver `MODELOS_EMBEDDINGS`.
   Los modelos open-source corren en el Ollama **local** del equipo
   (`http://localhost:11434`), que es distinto de Ollama Cloud.
@@ -40,7 +40,7 @@ FECHA_REFERENCIA = os.environ.get("ECOMARKET_FECHA") or json.loads(
 
 # --- LLM de generación ------------------------------------------------------
 
-PROVEEDOR = os.environ.get("ECOMARKET_PROVEEDOR", "openai").strip().lower()
+PROVEEDOR = os.environ.get("ECOMARKET_PROVEEDOR", "ollama").strip().lower()
 OLLAMA_LOCAL_URL = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 
 PROVEEDORES = {
@@ -63,7 +63,7 @@ PROVEEDORES = {
     # Respaldo sin API key ni costo: un modelo pequeño servido por el Ollama
     # local del equipo (el mismo que sirve los embeddings). Sirve para ejecutar
     # y verificar la cadena completa sin depender de un proveedor externo; la
-    # calidad de redacción es menor que la de gpt-4o-mini.
+    # calidad de redacción es menor que la del modelo cloud.
     "local": {
         "api_key_names": (),
         "base_url": f"{OLLAMA_LOCAL_URL}/v1",

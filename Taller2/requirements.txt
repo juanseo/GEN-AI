@@ -3,7 +3,7 @@
 
 # Framework RAG (LangChain 1.x)
 langchain-core>=1.6
-langchain-openai>=1.7          # LLM gpt-4o-mini y embeddings text-embedding-3-small
+langchain-openai>=1.7          # LLM vía ChatOpenAI (proveedor activo en src/config.py) y embeddings text-embedding-3-small
 langchain-ollama>=1.1          # embeddings open-source (bge-m3) servidos por Ollama local
 langchain-chroma>=1.1          # integración con la base vectorial
 langchain-text-splitters>=1.1  # chunking recursivo

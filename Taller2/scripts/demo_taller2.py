@@ -251,8 +251,9 @@ def main() -> int:
                f"- Duración: {time.perf_counter() - inicio:.0f} s", ""]
 
     OUTPUTS_DIR.mkdir(exist_ok=True)
-    # La corrida oficial es la de gpt-4o-mini; las de otros proveedores llevan sufijo.
-    sufijo = "" if CONFIG.proveedor == "openai" else f"_{CONFIG.proveedor}"
+    # La corrida oficial es la del proveedor cloud (ollama u openai); la del
+    # respaldo local (Ollama de la máquina, sin key) lleva sufijo.
+    sufijo = f"_{CONFIG.proveedor}" if CONFIG.proveedor == "local" else ""
     nombre = f"ejecucion_taller2{sufijo}{'_' + args.solo if args.solo else ''}.md"
     destino = OUTPUTS_DIR / nombre
     destino.write_text("\n".join(lineas), encoding="utf-8")

@@ -115,7 +115,7 @@ def main() -> int:
     # El diccionario del inicio corre dos ramas con la misma pregunta:
     #   "contexto": pregunta → retriever → formatear   (lo recuperado, como texto)
     #   "consulta": pregunta tal cual                  (RunnablePassthrough)
-    # Después: prompt (sistema + plantilla) → LLM (gpt-4o-mini) → texto.
+    # Después: prompt (sistema + plantilla) → LLM (el modelo activo de config.py) → texto.
     # -----------------------------------------------------------------------
     prompt = ChatPromptTemplate.from_messages(
         [("system", prompts.SISTEMA), ("human", prompts.RAG_GENERAL)]

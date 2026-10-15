@@ -20,8 +20,9 @@ con Ollama, convierte en vectores una base de conocimiento de **tres documentos 
 tres formatos** (política en PDF, catálogo en CSV, FAQ en JSON), partidos por su
 estructura natural. Los vectores viven en **ChromaDB** (HNSW, coseno). Con
 **LangChain**, la cadena del Taller 1 (guardrails → router → *function calling* para
-pedidos / RAG para lo demás) consulta esa base antes de que `gpt-4o-mini` genere la
-respuesta. Si nada en la base se parece a la pregunta, un **umbral de similitud
+pedidos / RAG para lo demás) consulta esa base antes de que el LLM de la nube genere la
+respuesta: `glm-5.3-flash` en Ollama Cloud por defecto (el modelo del Taller 1),
+`gpt-4o-mini` como alternativa. Si nada en la base se parece a la pregunta, un **umbral de similitud
 calibrado** hace que el asistente lo diga, sin inventar ni gastar tokens. Todas las
 decisiones están respaldadas por una evaluación con 34 preguntas reales.
 
@@ -40,8 +41,8 @@ decisiones están respaldadas por una evaluación con 34 preguntas reales.
 | Archivo | Lo genera | Contiene |
 |---|---|---|
 | [`outputs/evaluacion_retrieval.md`](outputs/evaluacion_retrieval.md) | `python -m scripts.evaluar_retrieval` | Comparación de 3 modelos de embeddings (más OpenAI si hay key) y 3 estrategias de *chunking*; calibración del umbral |
-| [`outputs/ejecucion_taller2_local.md`](outputs/ejecucion_taller2_local.md) | `python -m scripts.demo_taller2` con `ECOMARKET_PROVEEDOR=local` | Con RAG vs. sin RAG, fuera de alcance, integración con el Taller 1 y 4 experimentos, ejecutados con `llama3.2:3b` local |
-| `outputs/ejecucion_taller2.md` | `python -m scripts.demo_taller2` | La misma corrida con `gpt-4o-mini` (requiere `OPENAI_API_KEY`) |
+| [`outputs/ejecucion_taller2_local.md`](outputs/ejecucion_taller2_local.md) | `python -m scripts.demo_taller2` con `ECOMARKET_PROVEEDOR=local` | La corrida completa de 5 secciones (A–E: con/sin RAG, preguntas nuevas, fuera de alcance, integración con el Taller 1, 4 experimentos), ejecutada con `llama3.2:3b` local |
+| `outputs/ejecucion_taller2.md` | `python -m scripts.demo_taller2` | La misma corrida con el proveedor por defecto: `glm-5.3-flash` en Ollama Cloud (requiere `OLLAMA_API_KEY`) |
 
 ## Resultados principales
 
@@ -77,8 +78,12 @@ pip install -r requirements.txt
 ### 3. Configurar la API key del LLM
 
 ```bash
-cp .env.example .env            # y completa OPENAI_API_KEY
+cp .env.example .env            # y completa OLLAMA_API_KEY
 ```
+
+> Por defecto el LLM es `glm-5.3-flash` en Ollama Cloud, el mismo proveedor del
+> Taller 1 (la key se crea en https://ollama.com/settings/keys). Con
+> `ECOMARKET_PROVEEDOR=openai` y `OPENAI_API_KEY` se usa `gpt-4o-mini` en su lugar.
 
 > **Sin API key:** todo el sistema corre localmente con `ECOMARKET_PROVEEDOR=local`
 > (LLM `llama3.2:3b` en Ollama: `ollama pull llama3.2:3b`). La redacción es de menor
