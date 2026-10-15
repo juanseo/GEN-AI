@@ -7,3 +7,7 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Taller 2: índice vectorial regenerable
+indice_chroma/
+.pytest_cache/

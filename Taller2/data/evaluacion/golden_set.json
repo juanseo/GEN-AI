@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "descripcion": "Conjunto de evaluación del retrieval. Las consultas están redactadas como las escribiría un cliente (coloquiales, sin el vocabulario del documento) para medir la búsqueda semántica y no la coincidencia de palabras.",
+    "criterio_relevancia": "Un fragmento recuperado es relevante si contiene, ignorando espacios y saltos de línea, al menos una de las cadenas de `relevantes`. El criterio no depende de cómo se partieron los documentos, así que permite comparar estrategias de chunking.",
+    "fuera_de_alcance": "Consultas que la base de conocimiento no puede responder. Se usan para calibrar el umbral de relevancia: el asistente debe reconocer que no tiene la información."
+  },
+  "en_alcance": [
+    {"id": "Q01", "consulta": "me arrepentí de comprar la botella, ¿hasta cuándo la puedo devolver?", "relevantes": ["30 días calendario", "ECO-BOT-500"]},
+    {"id": "Q02", "consulta": "ya no quiero la miel que compré, ¿me la reciben de vuelta?", "relevantes": ["ECO-MIE-500", "NO_DEV_PERECEDERO"]},
+    {"id": "Q03", "consulta": "el shampoo me llegó roto y con hongos, ¿qué opciones tengo?", "relevantes": ["Excepción obligatoria"]},
+    {"id": "Q04", "consulta": "¿quién paga el envío si devuelvo algo porque simplemente no me gustó?", "relevantes": ["Arrepentimiento entre el día 6"]},
+    {"id": "Q05", "consulta": "si pagué por PSE, ¿en cuánto tiempo me devuelven la plata?", "relevantes": ["PSE / transferencia bancaria"]},
+    {"id": "Q06", "consulta": "la camiseta me quedó pequeña, ¿la puedo cambiar por otra talla?", "relevantes": ["ECO-CAM-ALG", "cambios de talla sin costo"]},
+    {"id": "Q07", "consulta": "mi compra todavía no ha salido de la bodega, ¿la puedo anular?", "relevantes": ["puede cancelarse sin costo", "todavía se puede cancelar sin costo"]},
+    {"id": "Q08", "consulta": "¿cuántos días se demora un paquete hasta Leticia, Amazonas?", "relevantes": ["¿Cuánto tarda un envío?"]},
+    {"id": "Q09", "consulta": "¿me cobran el domicilio o es gratis?", "relevantes": ["¿Cuánto cuesta el envío?"]},
+    {"id": "Q10", "consulta": "¿pueden mandarle un pedido a mi hermana que vive en Miami?", "relevantes": ["¿Hacen envíos internacionales?"]},
+    {"id": "Q11", "consulta": "¿le puedo pagar en efectivo al mensajero cuando me traiga el paquete?", "relevantes": ["¿Puedo pagar contra entrega?"]},
+    {"id": "Q12", "consulta": "necesito que la factura salga a nombre de mi empresa", "relevantes": ["¿Emiten factura electrónica?"]},
+    {"id": "Q13", "consulta": "¿puedo diferir la compra con mi tarjeta de crédito?", "relevantes": ["¿Puedo pagar a cuotas?"]},
+    {"id": "Q14", "consulta": "quiero que borren toda mi información de su base de datos", "relevantes": ["¿Cómo solicito que eliminen mis datos personales?"]},
+    {"id": "Q15", "consulta": "¿tienen algo para llevar el tinto calientico a la oficina?", "relevantes": ["ECO-TER-CAF", "ECO-BOT-500"]},
+    {"id": "Q16", "consulta": "¿qué pasa si la compostera se daña a los seis meses?", "relevantes": ["garantía legal de 12 meses", "ECO-COM-13L"]},
+    {"id": "Q17", "consulta": "¿de qué material son los cepillos de dientes que venden?", "relevantes": ["ECO-CEP-BAM"]},
+    {"id": "Q18", "consulta": "¿venden matas o plantas para la casa?", "relevantes": ["ECO-PLA-ALO", "ECO-KIT-HUE"]},
+    {"id": "Q19", "consulta": "¿qué hago con los frascos vacíos de lo que les compro?", "relevantes": ["¿Tienen un programa de reciclaje de envases?"]},
+    {"id": "Q20", "consulta": "¿mandan los pedidos envueltos en plástico?", "relevantes": ["¿Los empaques son sostenibles?"]},
+    {"id": "Q21", "consulta": "¿a qué horas puedo hablar con una persona de verdad?", "relevantes": ["¿Cuál es el horario de atención?"]},
+    {"id": "Q22", "consulta": "¿tienen algún local para ir a mirar los productos?", "relevantes": ["¿Tienen tiendas físicas?"]},
+    {"id": "Q23", "consulta": "en la app mi pedido dice EN_TRANSITO, ¿eso qué quiere decir?", "relevantes": ["¿Qué significa cada estado del pedido?"]},
+    {"id": "Q24", "consulta": "el banco me rechazó la tarjeta, ¿se pierde mi pedido?", "relevantes": ["Mi pago fue rechazado"]},
+    {"id": "Q25", "consulta": "si no hay nadie en la casa cuando llegue el mensajero, ¿qué pasa?", "relevantes": ["¿Qué pasa si no estoy cuando llega el domicilio?"]},
+    {"id": "Q26", "consulta": "¿puedo devolver la agenda que mandé a grabar con mi nombre?", "relevantes": ["ECO-AGE-PER", "NO_DEV_PERSONALIZADO"]}
+  ],
+  "fuera_de_alcance": [
+    {"id": "F01", "consulta": "¿cuál es la capital de Australia?"},
+    {"id": "F02", "consulta": "¿me ayudas a hacer la declaración de renta?"},
+    {"id": "F03", "consulta": "¿venden celulares o computadores portátiles?"},
+    {"id": "F04", "consulta": "¿a cuánto está el dólar hoy?"},
+    {"id": "F05", "consulta": "recomiéndame una película para el fin de semana"},
+    {"id": "F06", "consulta": "¿tienen vacantes de trabajo en EcoMarket?"},
+    {"id": "F07", "consulta": "se me dañó la lavadora, ¿cómo la arreglo?"},
+    {"id": "F08", "consulta": "escríbeme un poema sobre el mar"}
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "_meta": {
+    "descripcion": "Preguntas frecuentes de EcoMarket, exportadas del centro de ayuda. Datos ficticios para los Talleres 1 y 2.",
+    "version": "2026-09",
+    "fuente_en_produccion": "CMS del centro de ayuda (exportación JSON nocturna)."
+  },
+  "preguntas": [
+    {
+      "id": "ENV-01",
+      "categoria": "envios",
+      "pregunta": "¿Cuánto tarda un envío?",
+      "respuesta": "Depende del destino y se cuenta en días hábiles desde el despacho, no desde la compra: Cali y área metropolitana, 1 a 2 días; ciudades principales (Bogotá, Medellín, Barranquilla, Cartagena, Bucaramanga, Pereira, Manizales), 2 a 4 días; ciudades intermedias, 4 a 6 días; zonas de difícil acceso (Amazonas, Chocó, Guainía, Vaupés, Vichada, San Andrés), 8 a 15 días. La preparación del pedido en bodega toma entre 1 y 2 días hábiles adicionales.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ENV-02",
+      "categoria": "envios",
+      "pregunta": "¿Cuánto cuesta el envío?",
+      "respuesta": "El envío es gratis en compras superiores a COP 150.000. Por debajo de ese valor se cobra una tarifa plana de COP 14.000 para ciudades principales e intermedias y de COP 28.000 para zonas de difícil acceso.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ENV-03",
+      "categoria": "envios",
+      "pregunta": "¿Qué significa cada estado del pedido?",
+      "respuesta": "PAGO_PENDIENTE: la pasarela aún no confirma el pago. EN_PREPARACION: el pedido se está alistando en bodega y todavía se puede cancelar sin costo. EN_TRANSITO: el pedido ya está en manos de la transportadora y va en ruta. RETRASADO: la entrega superó la fecha estimada original por una novedad logística. ENTREGADO: la transportadora confirmó la entrega. DEVOLUCION_EN_CURSO: hay una devolución o cambio activo sobre el pedido. CANCELADO: el pedido se anuló antes del despacho.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ENV-04",
+      "categoria": "envios",
+      "pregunta": "¿Qué pasa si no estoy cuando llega el domicilio?",
+      "respuesta": "La transportadora hace hasta tres intentos de entrega en días distintos. Después del tercer intento fallido el pedido regresa a la bodega de EcoMarket y te contactamos para coordinar un nuevo envío (con costo) o el reembolso.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ENV-05",
+      "categoria": "envios",
+      "pregunta": "¿Puedo cambiar la dirección de entrega?",
+      "respuesta": "Solo mientras el pedido esté EN_PREPARACION, desde Mi cuenta > Mis pedidos. Si ya está EN_TRANSITO, el cambio depende de la transportadora y lo gestiona un agente humano.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ENV-06",
+      "categoria": "envios",
+      "pregunta": "¿Hacen envíos internacionales?",
+      "respuesta": "No. EcoMarket solo despacha dentro de Colombia continental y San Andrés.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "PAG-01",
+      "categoria": "pagos",
+      "pregunta": "¿Qué medios de pago aceptan?",
+      "respuesta": "Tarjetas de crédito y débito Visa, Mastercard y American Express, PSE, Nequi y Daviplata. Todos los pagos se procesan en una pasarela certificada PCI DSS: EcoMarket nunca ve ni almacena los datos completos de tu tarjeta.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "PAG-02",
+      "categoria": "pagos",
+      "pregunta": "¿Puedo pagar contra entrega?",
+      "respuesta": "No. EcoMarket no ofrece pago contra entrega ni pago en efectivo al recibir. El pedido se despacha cuando la pasarela confirma el pago; mientras tanto queda en estado PAGO_PENDIENTE.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "PAG-03",
+      "categoria": "pagos",
+      "pregunta": "¿Puedo pagar a cuotas?",
+      "respuesta": "Sí, con tarjeta de crédito. El número de cuotas lo eliges en la pasarela y los intereses los define tu banco emisor; EcoMarket no cobra recargos por diferir el pago.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "PAG-04",
+      "categoria": "pagos",
+      "pregunta": "¿Emiten factura electrónica?",
+      "respuesta": "Sí. La factura electrónica validada por la DIAN llega a tu correo dentro de las 24 horas siguientes a la confirmación del pago. Si la necesitas a nombre de una empresa, ingresa el NIT y la razón social en el checkout antes de pagar. Una factura ya emitida no se puede modificar: el cambio de titular requiere una nota crédito que gestiona un agente humano dentro del mismo mes de la compra.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "PAG-05",
+      "categoria": "pagos",
+      "pregunta": "Mi pago fue rechazado, ¿qué hago?",
+      "respuesta": "Verifica el cupo y que tu banco tenga habilitadas las compras por internet, e intenta de nuevo o con otro medio de pago. El pedido se conserva en PAGO_PENDIENTE durante 24 horas; si en ese tiempo no se confirma ningún pago, se cancela automáticamente sin generar ningún cobro.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "PAG-06",
+      "categoria": "pagos",
+      "pregunta": "¿Cómo uso un cupón de descuento?",
+      "respuesta": "Ingresa el código en el carrito antes de pagar. Se acepta un solo cupón por pedido y los cupones no aplican sobre la compra de tarjetas de regalo.",
+      "actualizado": "2026-08-20"
+    },
+    {
+      "id": "CTA-01",
+      "categoria": "cuenta",
+      "pregunta": "¿Necesito una cuenta para comprar?",
+      "respuesta": "No, puedes comprar como invitado. Pero para solicitar devoluciones desde Mi cuenta > Mis pedidos debes registrarte con el mismo correo que usaste en la compra.",
+      "actualizado": "2026-07-10"
+    },
+    {
+      "id": "CTA-02",
+      "categoria": "cuenta",
+      "pregunta": "Olvidé mi contraseña, ¿cómo la recupero?",
+      "respuesta": "En la página de ingreso usa la opción ¿Olvidaste tu contraseña?. Te enviaremos un enlace válido por 30 minutos. Ningún asistente ni agente de EcoMarket te pedirá nunca tu contraseña.",
+      "actualizado": "2026-07-10"
+    },
+    {
+      "id": "CTA-03",
+      "categoria": "cuenta",
+      "pregunta": "¿Cómo solicito que eliminen mis datos personales?",
+      "respuesta": "Conforme a la Ley 1581 de 2012 puedes pedir la supresión de tus datos desde Mi cuenta > Mis datos o escribiendo a datos@ecomarket.co. La solicitud se responde en un máximo de 15 días hábiles. Los datos que la ley obliga a conservar, como las facturas, se mantienen bloqueados durante el plazo legal.",
+      "actualizado": "2026-07-10"
+    },
+    {
+      "id": "CTA-04",
+      "categoria": "cuenta",
+      "pregunta": "¿Cómo dejo de recibir correos promocionales?",
+      "respuesta": "Usa el enlace Cancelar suscripción al final de cualquier correo promocional o desactiva la opción en Mi cuenta > Preferencias. Los correos sobre tus pedidos y facturas seguirán llegando porque son transaccionales.",
+      "actualizado": "2026-07-10"
+    },
+    {
+      "id": "SOS-01",
+      "categoria": "sostenibilidad",
+      "pregunta": "¿Los empaques son sostenibles?",
+      "respuesta": "Sí. Todos los pedidos se despachan en cajas de cartón reciclado con certificación FSC, relleno de papel kraft y cinta de fibra natural. No usamos plástico de un solo uso en ningún punto del empaque.",
+      "actualizado": "2026-06-30"
+    },
+    {
+      "id": "SOS-02",
+      "categoria": "sostenibilidad",
+      "pregunta": "¿Qué certificaciones tienen sus productos?",
+      "respuesta": "Cada ficha de producto indica su certificación: GOTS para textiles de algodón orgánico, FSC para papel y cartón y certificación orgánica para alimentos. EcoMarket verifica una vez al año los certificados vigentes de cada proveedor.",
+      "actualizado": "2026-06-30"
+    },
+    {
+      "id": "SOS-03",
+      "categoria": "sostenibilidad",
+      "pregunta": "¿Tienen un programa de reciclaje de envases?",
+      "respuesta": "Sí, el programa Vuelve a Casa: lleva los frascos y envases vacíos de productos EcoMarket a los puntos aliados de Cali, Bogotá y Medellín. Por cada 5 envases recibes un cupón de COP 5.000 para tu próxima compra.",
+      "actualizado": "2026-06-30"
+    },
+    {
+      "id": "SOS-04",
+      "categoria": "sostenibilidad",
+      "pregunta": "¿Compensan la huella de carbono de los envíos?",
+      "respuesta": "Sí. Compensamos las emisiones de todos los envíos con un programa de reforestación de bosque seco en el Valle del Cauca y publicamos cada año un reporte de sostenibilidad en el sitio web.",
+      "actualizado": "2026-06-30"
+    },
+    {
+      "id": "ATN-01",
+      "categoria": "atencion",
+      "pregunta": "¿Cuál es el horario de atención?",
+      "respuesta": "El asistente virtual atiende 24 horas, todos los días. Los agentes humanos atienden de lunes a viernes, de 8:00 a 18:00 (hora de Colombia). Un caso escalado a un agente humano recibe respuesta en un máximo de 2 horas hábiles.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ATN-02",
+      "categoria": "atencion",
+      "pregunta": "¿Por qué canales puedo contactarlos?",
+      "respuesta": "Por el chat del sitio web y de la app, por WhatsApp, por redes sociales y por correo a servicio@ecomarket.co. Todos los canales llegan al mismo equipo y comparten el historial de tu caso.",
+      "actualizado": "2026-09-01"
+    },
+    {
+      "id": "ATN-03",
+      "categoria": "atencion",
+      "pregunta": "¿Tienen tiendas físicas?",
+      "respuesta": "No. EcoMarket es una tienda 100% en línea. Nuestra bodega está en Yumbo (Valle del Cauca) y no atiende público ni entregas en sitio.",
+      "actualizado": "2026-09-01"
+    }
+  ]
+}

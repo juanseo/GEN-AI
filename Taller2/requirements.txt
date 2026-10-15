@@ -1,0 +1,20 @@
+# Dependencias del asistente de EcoMarket con RAG - Taller 2
+# Python 3.11+
+
+# Framework RAG (LangChain 1.x)
+langchain-core>=1.6
+langchain-openai>=1.7          # LLM gpt-4o-mini y embeddings text-embedding-3-small
+langchain-ollama>=1.1          # embeddings open-source (bge-m3) servidos por Ollama local
+langchain-chroma>=1.1          # integración con la base vectorial
+langchain-text-splitters>=1.1  # chunking recursivo
+chromadb>=1.5                  # base vectorial
+
+# Documentos y utilidades
+pypdf>=6.0                     # lectura de la política en PDF
+python-dotenv>=1.0
+numpy>=2.0
+scikit-learn>=1.5              # TF-IDF, línea base del Taller 1
+
+# Solo para regenerar el PDF y para las pruebas
+reportlab>=4.0
+pytest>=8.0
