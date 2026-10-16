@@ -52,7 +52,7 @@ los dos:
                     (0 tokens)                    │   sistema + {contexto}+{consulta}│
                                                   │        │                         │
                                                   │        ▼                         │
-                                                  │ ChatOpenAI (gpt-4o-mini)         │
+                                                  │ ChatOpenAI (glm-5.3-flash)      │
                                                   │        │                         │
                                                   │        ▼                         │
                                                   │ StrOutputParser → texto          │
@@ -148,7 +148,7 @@ está fuera de alcance.
 cadena = (
     {"contexto": retriever | formatear, "consulta": RunnablePassthrough()}
     | prompt          # ChatPromptTemplate: SISTEMA + RAG_GENERAL
-    | crear_llm()     # ChatOpenAI → gpt-4o-mini
+    | crear_llm()     # ChatOpenAI (el modelo activo de config.py)
     | StrOutputParser()
 )
 cadena.invoke("¿Le puedo pagar en efectivo al mensajero?")
@@ -219,8 +219,10 @@ Los resultados citados son de
 [`outputs/ejecucion_taller2_local.md`](../outputs/ejecucion_taller2_local.md),
 ejecutado con el LLM local `llama3.2:3b` (ver sección 6). La redacción exacta
 cambia entre corridas (temperatura 0,2 y un modelo pequeño); la recuperación, los
-umbrales y los tokens de entrada son deterministas. La corrida con `gpt-4o-mini` se
-genera con el mismo comando y deja `outputs/ejecucion_taller2.md`.
+umbrales y los tokens de entrada son deterministas. La corrida oficial
+([`outputs/ejecucion_taller2.md`](../outputs/ejecucion_taller2.md)) se genera con el
+mismo comando y ahora corre `glm-5.3-flash` (Ollama Cloud), el proveedor por defecto;
+con `ECOMARKET_PROVEEDOR=openai`, corre `gpt-4o-mini`.
 
 ### 5.1 Quitar el RAG (sección A de la demo)
 
@@ -375,8 +377,10 @@ guardrails**, porque un modelo pequeño falla más:
 
 ## 7. Siguientes pasos
 
-1. Generar la corrida oficial con `gpt-4o-mini` y medir `text-embedding-3-small`
-   (los dos comandos ya están listos).
+1. Medir `text-embedding-3-small` con `scripts/evaluar_retrieval.py` y recalibrar
+   su umbral (0,35 provisional). La corrida oficial ya está generada con el
+   proveedor por defecto: [`outputs/ejecucion_taller2.md`](../outputs/ejecucion_taller2.md),
+   con `glm-5.3-flash`.
 2. Hacer crecer el *golden set* con preguntas reales del copiloto interno y
    recalibrar el umbral.
 3. Agregar un re-ranker *cross-encoder* multilingüe (por ejemplo `bge-reranker-v2-m3`)

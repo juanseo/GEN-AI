@@ -11,7 +11,7 @@
 |---|---|---|---|
 | **Modelo de embeddings** | **`bge-m3`** (BAAI, open-source, licencia MIT), servido localmente con Ollama | `text-embedding-3-small` (OpenAI), activable por configuración y como respaldo automático | Fue el mejor en español coloquial en nuestra evaluación (88% de aciertos en primera posición contra 62% del otro modelo abierto y 58% de la línea base), sin costo por consulta y sin sacar texto de la infraestructura |
 | **Base de datos vectorial** | **ChromaDB** persistente (índice HNSW, distancia coseno) | pgvector (ruta de producción del Taller 1), Weaviate o Pinecone si cambia la escala | La base de conocimiento de EcoMarket es pequeña (decenas a miles de fragmentos). Chroma da filtros por metadata y por texto, persistencia y *upsert* sin operar un servidor adicional |
-| LLM de generación *(sin cambios)* | `gpt-4o-mini` | `glm-5.3-flash` (Ollama Cloud) o `llama3.2:3b` local | Decisión del Taller 1: si el dato correcto llega en el prompt, basta un modelo de gama económica |
+| LLM de generación *(sin cambios)* | **`glm-5.3-flash`** (Ollama Cloud, la misma del Taller 1) | `gpt-4o-mini` (OpenAI) o `llama3.2:3b` local | Decisión del Taller 1: si el dato correcto llega en el prompt, basta un modelo de gama económica |
 | Framework | LangChain 1.x (LCEL) | — | Abstrae embeddings y base vectorial detrás de interfaces comunes: cambiar cualquiera de los dos es cambiar una clase |
 
 ---
@@ -179,7 +179,9 @@ fragmento correcto en español coloquial), no tiene costo marginal y cumple mejo
 minimización de datos. Su desventaja, operar el servidor del modelo, es aceptable
 porque Ollama ya sirve otros modelos en la misma máquina. `text-embedding-3-small`
 queda como respaldo automático: si Ollama no responde, el sistema cambia a OpenAI,
-con su propia colección y su propio umbral (`src/embeddings.py::resolver_embeddings`).
+con su propia colección y su propio umbral, todavía provisional (0,35, no calibrado
+en el golden set; recalibrar con `scripts/evaluar_retrieval.py`). El respaldo vive
+en `src/embeddings.py::resolver_embeddings`.
 
 ---
 
