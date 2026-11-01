@@ -1,0 +1,28 @@
+# Dependencias del agente de devoluciones de EcoMarket - Proyecto Final
+# (base del Taller 2 + agente + interfaz)
+# Python 3.11+
+
+# Agente (Proyecto Final)
+langchain>=1.0                 # create_agent
+langgraph>=1.0                 # checkpointer de memoria por hilo (InMemorySaver)
+
+# Interfaz (Proyecto Final, Fase 4)
+streamlit>=1.40
+
+# Framework RAG (LangChain 1.x)
+langchain-core>=1.6
+langchain-openai>=1.7          # LLM vía ChatOpenAI (proveedor activo en src/config.py) y embeddings text-embedding-3-small
+langchain-ollama>=1.1          # embeddings open-source (bge-m3) servidos por Ollama local
+langchain-chroma>=1.1          # integración con la base vectorial
+langchain-text-splitters>=1.1  # chunking recursivo
+chromadb>=1.5                  # base vectorial
+
+# Documentos y utilidades
+pypdf>=6.0                     # lectura de la política en PDF
+python-dotenv>=1.0
+numpy>=2.0
+scikit-learn>=1.5              # TF-IDF, línea base del Taller 1
+
+# Solo para regenerar el PDF y para las pruebas
+reportlab>=4.0
+pytest>=8.0

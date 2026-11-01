@@ -1,0 +1,224 @@
+{
+  "_meta": {
+    "descripcion": "Base de datos de prueba de pedidos de EcoMarket. Datos 100% ficticios creados para el Taller 1.",
+    "fecha_corte": "2026-09-22",
+    "fuente_en_produccion": "API interna del OMS (Order Management System) de EcoMarket, consultada via function calling. NO se indexa en la base vectorial por ser dato estructurado, transaccional y con PII.",
+    "total_pedidos": 12
+  },
+  "pedidos": [
+    {
+      "tracking": "ECO-10001",
+      "cliente_alias": "Cliente A",
+      "email_hash": "sha256:9f2a...c71b",
+      "fecha_compra": "2026-09-14",
+      "estado": "EN_TRANSITO",
+      "transportadora": "Coordinadora",
+      "ciudad_destino": "Cali",
+      "fecha_estimada_entrega": "2026-09-24",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10001",
+      "items": [
+        {"sku": "ECO-BOT-500", "nombre": "Botella de acero inoxidable 500 ml", "cantidad": 2, "precio_unitario_cop": 89000}
+      ],
+      "total_cop": 178000
+    },
+    {
+      "tracking": "ECO-10002",
+      "cliente_alias": "Cliente B",
+      "email_hash": "sha256:41dd...80ae",
+      "fecha_compra": "2026-09-02",
+      "estado": "ENTREGADO",
+      "transportadora": "Servientrega",
+      "ciudad_destino": "Bogota",
+      "fecha_estimada_entrega": "2026-09-08",
+      "fecha_entrega_real": "2026-09-07",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10002",
+      "items": [
+        {"sku": "ECO-CEP-BAM", "nombre": "Cepillo dental de bambu (pack x4)", "cantidad": 1, "precio_unitario_cop": 32000}
+      ],
+      "total_cop": 32000
+    },
+    {
+      "tracking": "ECO-10003",
+      "cliente_alias": "Cliente C",
+      "email_hash": "sha256:7b10...2f44",
+      "fecha_compra": "2026-09-10",
+      "estado": "RETRASADO",
+      "transportadora": "Coordinadora",
+      "ciudad_destino": "Leticia",
+      "fecha_estimada_entrega": "2026-09-26",
+      "fecha_estimada_original": "2026-09-18",
+      "retrasado": true,
+      "motivo_retraso": "Cierre temporal de la via por condiciones climaticas en la ruta fluvial de ultima milla.",
+      "url_rastreo": "https://track.ecomarket.co/ECO-10003",
+      "items": [
+        {"sku": "ECO-JAB-SOL", "nombre": "Jabon solido artesanal de calendula", "cantidad": 3, "precio_unitario_cop": 18000},
+        {"sku": "ECO-ESP-KON", "nombre": "Esponja vegetal konjac", "cantidad": 1, "precio_unitario_cop": 22000}
+      ],
+      "total_cop": 76000
+    },
+    {
+      "tracking": "ECO-10004",
+      "cliente_alias": "Cliente D",
+      "email_hash": "sha256:c003...19aa",
+      "fecha_compra": "2026-09-19",
+      "estado": "EN_PREPARACION",
+      "transportadora": null,
+      "ciudad_destino": "Medellin",
+      "fecha_estimada_entrega": "2026-09-27",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10004",
+      "items": [
+        {"sku": "ECO-COM-13L", "nombre": "Compostera domestica 13 L", "cantidad": 1, "precio_unitario_cop": 245000}
+      ],
+      "total_cop": 245000
+    },
+    {
+      "tracking": "ECO-10005",
+      "cliente_alias": "Cliente E",
+      "email_hash": "sha256:5e77...b3c0",
+      "fecha_compra": "2026-08-28",
+      "estado": "ENTREGADO",
+      "transportadora": "Interrapidisimo",
+      "ciudad_destino": "Barranquilla",
+      "fecha_estimada_entrega": "2026-09-03",
+      "fecha_entrega_real": "2026-09-05",
+      "retrasado": true,
+      "motivo_retraso": "Congestion operativa en el centro de distribucion de la Costa Atlantica.",
+      "url_rastreo": "https://track.ecomarket.co/ECO-10005",
+      "items": [
+        {"sku": "ECO-PAN-REU", "nombre": "Panitos reutilizables de algodon organico (x10)", "cantidad": 2, "precio_unitario_cop": 45000}
+      ],
+      "total_cop": 90000
+    },
+    {
+      "tracking": "ECO-10006",
+      "cliente_alias": "Cliente F",
+      "email_hash": "sha256:a1b2...ff31",
+      "fecha_compra": "2026-09-20",
+      "estado": "PAGO_PENDIENTE",
+      "transportadora": null,
+      "ciudad_destino": "Pereira",
+      "fecha_estimada_entrega": null,
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10006",
+      "items": [
+        {"sku": "ECO-TER-CAF", "nombre": "Termo de cafe reutilizable 350 ml", "cantidad": 1, "precio_unitario_cop": 98000}
+      ],
+      "total_cop": 98000
+    },
+    {
+      "tracking": "ECO-10007",
+      "cliente_alias": "Cliente G",
+      "email_hash": "sha256:6d4f...0c9e",
+      "fecha_compra": "2026-09-05",
+      "estado": "DEVOLUCION_EN_CURSO",
+      "transportadora": "Servientrega",
+      "ciudad_destino": "Cali",
+      "fecha_estimada_entrega": "2026-09-11",
+      "fecha_entrega_real": "2026-09-11",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10007",
+      "items": [
+        {"sku": "ECO-CAM-ALG", "nombre": "Camiseta de algodon organico talla M", "cantidad": 1, "precio_unitario_cop": 120000}
+      ],
+      "total_cop": 120000,
+      "nota_devolucion": "Cliente solicito cambio de talla el 2026-09-13. Guia de retorno generada."
+    },
+    {
+      "tracking": "ECO-10008",
+      "cliente_alias": "Cliente H",
+      "email_hash": "sha256:2c88...71da",
+      "fecha_compra": "2026-09-16",
+      "estado": "EN_TRANSITO",
+      "transportadora": "Interrapidisimo",
+      "ciudad_destino": "Bucaramanga",
+      "fecha_estimada_entrega": "2026-09-23",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10008",
+      "items": [
+        {"sku": "ECO-MIE-500", "nombre": "Miel organica de abejas nativas 500 g", "cantidad": 2, "precio_unitario_cop": 54000},
+        {"sku": "ECO-BOL-TEL", "nombre": "Bolsa de tela reutilizable", "cantidad": 3, "precio_unitario_cop": 15000}
+      ],
+      "total_cop": 153000
+    },
+    {
+      "tracking": "ECO-10009",
+      "cliente_alias": "Cliente I",
+      "email_hash": "sha256:9900...4be1",
+      "fecha_compra": "2026-08-15",
+      "estado": "ENTREGADO",
+      "transportadora": "Coordinadora",
+      "ciudad_destino": "Cartagena",
+      "fecha_estimada_entrega": "2026-08-21",
+      "fecha_entrega_real": "2026-08-20",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10009",
+      "items": [
+        {"sku": "ECO-SHA-BAR", "nombre": "Shampoo en barra sin sulfatos", "cantidad": 2, "precio_unitario_cop": 38000}
+      ],
+      "total_cop": 76000
+    },
+    {
+      "tracking": "ECO-10010",
+      "cliente_alias": "Cliente J",
+      "email_hash": "sha256:3f5c...aa02",
+      "fecha_compra": "2026-09-21",
+      "estado": "EN_PREPARACION",
+      "transportadora": null,
+      "ciudad_destino": "Manizales",
+      "fecha_estimada_entrega": "2026-09-29",
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10010",
+      "items": [
+        {"sku": "ECO-KIT-HUE", "nombre": "Kit de huerta urbana (semillas + sustrato)", "cantidad": 1, "precio_unitario_cop": 175000}
+      ],
+      "total_cop": 175000
+    },
+    {
+      "tracking": "ECO-10011",
+      "cliente_alias": "Cliente K",
+      "email_hash": "sha256:8ee1...d557",
+      "fecha_compra": "2026-09-01",
+      "estado": "CANCELADO",
+      "transportadora": null,
+      "ciudad_destino": "Cali",
+      "fecha_estimada_entrega": null,
+      "retrasado": false,
+      "motivo_retraso": null,
+      "url_rastreo": "https://track.ecomarket.co/ECO-10011",
+      "items": [
+        {"sku": "ECO-COM-13L", "nombre": "Compostera domestica 13 L", "cantidad": 1, "precio_unitario_cop": 245000}
+      ],
+      "total_cop": 245000,
+      "nota_cancelacion": "Cancelado por el cliente antes del despacho. Reembolso aprobado el 2026-09-02."
+    },
+    {
+      "tracking": "ECO-10012",
+      "cliente_alias": "Cliente L",
+      "email_hash": "sha256:0ab7...e34f",
+      "fecha_compra": "2026-09-12",
+      "estado": "RETRASADO",
+      "transportadora": "Servientrega",
+      "ciudad_destino": "Pasto",
+      "fecha_estimada_entrega": "2026-09-25",
+      "fecha_estimada_original": "2026-09-19",
+      "retrasado": true,
+      "motivo_retraso": "Novedad en la direccion de entrega: el destinatario no fue ubicado en dos intentos.",
+      "url_rastreo": "https://track.ecomarket.co/ECO-10012",
+      "items": [
+        {"sku": "ECO-VEL-SOY", "nombre": "Vela de cera de soya aromatica", "cantidad": 4, "precio_unitario_cop": 42000}
+      ],
+      "total_cop": 168000
+    }
+  ]
+}

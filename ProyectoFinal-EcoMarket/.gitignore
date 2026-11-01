@@ -1,0 +1,9 @@
+# Proyecto Final: archivos locales que no se versionan
+# (indice_chroma/, .venv/ y .env ya están en el .gitignore de la raíz)
+
+# Registro de guías y tickets que generan las herramientas al usar el agente
+data/devoluciones.json
+logs/
+
+# Enunciado y rúbrica del curso: no se publican
+docs/Proyecto Final.pdf
