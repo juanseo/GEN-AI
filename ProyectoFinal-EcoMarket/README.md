@@ -20,11 +20,23 @@ herramientas transaccionales y el RAG como quinta herramienta para citar la
 política. La elegibilidad la decide un **motor de reglas en código**, nunca el
 modelo. La guía solo se genera con una verificación válida de la misma
 conversación y, si el retorno tiene costo, con la aceptación del cliente en un
-turno posterior a aquel en que conoció el valor. La interfaz será una app de
-**Streamlit**.
+turno posterior a aquel en que conoció el valor. La interfaz es una app de
+**Streamlit** que muestra, junto a cada respuesta, las herramientas que usó el
+agente.
 
-**Arquitectura completa:** abrir [`docs/arquitectura.html`](docs/arquitectura.html)
-en el navegador (diagramas, herramientas, reglas, flujo, riesgos y plan).
+---
+
+## Las cuatro fases
+
+| Fase | Documento | Qué contiene |
+|---|---|---|
+| 1. Diseño de la arquitectura | [`docs/fase1-diseno-agente.md`](docs/fase1-diseno-agente.md) | Router + agente, las 5 herramientas (qué reciben y qué devuelven), el motor de reglas, LangChain frente a LlamaIndex y el diagrama del flujo de devolución |
+| 2. Implementación | [`docs/fase2-implementacion.md`](docs/fase2-implementacion.md) | Cómo se conectan las piezas, el código del agente, el manejo de éxito y error, y la evaluación de 12 casos con lo que encontró |
+| 3. Análisis crítico | [`docs/fase3-analisis-critico.md`](docs/fase3-analisis-critico.md) | Matriz de riesgos, lo que el prototipo todavía no resuelve, costo, monitoreo y propuestas de mejora |
+| 4. Despliegue | [`docs/fase4-despliegue.md`](docs/fase4-despliegue.md) | Streamlit frente a Gradio, la interfaz y la demostración de extremo a extremo con capturas |
+
+La versión visual del diseño, con diagramas interactivos, está en
+[`docs/arquitectura.html`](docs/arquitectura.html) (descargar y abrir en el navegador).
 
 ---
 
@@ -32,13 +44,13 @@ en el navegador (diagramas, herramientas, reglas, flujo, riesgos y plan).
 
 | Parte | Estado |
 |---|---|
-| Diseño de la arquitectura (Fase 1) | Listo en `docs/arquitectura.html` |
+| Diseño de la arquitectura (Fase 1) | Listo |
 | Motor de reglas `src/reglas_devolucion.py` + 35 pruebas | Listo |
 | Herramientas del agente `src/herramientas.py` + 20 pruebas | Listo |
 | Agente `src/agente.py` e integración en `src/asistente.py` (Fase 2) | Listo |
 | Evaluación del comportamiento: 12 casos de punta a punta | Listo: 12/12 en [`outputs/evaluacion_agente.md`](outputs/evaluacion_agente.md) |
-| Respuestas textuales de las fases (`docs/fase1…fase4-*.md`) | Pendiente (el contenido de las fases 1 y 3 ya está en el HTML) |
-| Interfaz Streamlit (Fase 4) | Pendiente |
+| Análisis crítico, monitoreo y mejoras (Fase 3) | Listo |
+| Interfaz Streamlit `app.py` (Fase 4), probada en el navegador | Listo |
 | Video (máximo 10 minutos) | Pendiente (guion en el HTML) |
 
 ---
@@ -77,6 +89,9 @@ python -m pytest -q
 set PYTHONIOENCODING=utf-8
 python -m scripts.indexar
 
+# Interfaz web (Fase 4) → http://localhost:8501
+streamlit run app.py
+
 # Evaluación de punta a punta: 12 casos → outputs/evaluacion_agente.md (~1,5 min)
 python -m scripts.evaluar_agente
 python -m scripts.evaluar_agente --solo 4     # un caso, solo en consola
@@ -90,8 +105,8 @@ cualquier carpeta superior: `OLLAMA_API_KEY=...`. Para usar OpenAI:
 `ECOMARKET_PROVEEDOR=openai` y `OPENAI_API_KEY`.
 
 Variables útiles: `ECOMARKET_SIMULAR_FALLA=1` hace fallar a la transportadora
-(caso 12 de la evaluación) y `ECOMARKET_FECHA` fija el "hoy" (por defecto
-2026-09-22, el corte de `pedidos.json`).
+(caso 12 de la evaluación; en la interfaz es un interruptor) y `ECOMARKET_FECHA`
+fija el "hoy" (por defecto 2026-09-22, el corte de `pedidos.json`).
 
 ---
 
@@ -113,7 +128,11 @@ Variables útiles: `ECOMARKET_SIMULAR_FALLA=1` hace fallar a la transportadora
 
 ```
 ProyectoFinal-EcoMarket/
-├── docs/arquitectura.html          ← diseño completo del agente (Fases 1, 3 y 4)
+├── app.py                          ← NUEVO: interfaz Streamlit (Fase 4)
+├── docs/
+│   ├── fase1…fase4-*.md            ← NUEVO: respuestas textuales de las cuatro fases
+│   ├── img/                        ← capturas de la demostración en el navegador
+│   └── arquitectura.html           ← diseño visual con diagramas interactivos
 ├── data/                           ← base de conocimiento y pedidos (ficticios, del Taller 2)
 ├── src/
 │   ├── reglas_devolucion.py        ← NUEVO: política v3.2 como código

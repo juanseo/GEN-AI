@@ -8,6 +8,7 @@ langgraph>=1.0                 # checkpointer de memoria por hilo (InMemorySaver
 
 # Interfaz (Proyecto Final, Fase 4)
 streamlit>=1.40
+protobuf>=5.26,<7             # streamlit importa google.protobuf.json_format, que protobuf 7 ya no trae
 
 # Framework RAG (LangChain 1.x)
 langchain-core>=1.6

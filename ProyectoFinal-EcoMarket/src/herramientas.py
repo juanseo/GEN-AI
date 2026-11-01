@@ -186,6 +186,14 @@ class RegistroDevoluciones:
             contenido = {"guias": self.guias, "tickets": self.tickets}
             self.ruta.write_text(json.dumps(contenido, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    def vaciar(self) -> None:
+        """Borra guías, tickets y verificaciones: vuelve a los datos de prueba sin acciones."""
+        self.verificaciones.clear()
+        self.fallas.clear()
+        self.guias.clear()
+        self.tickets.clear()
+        self._guardar()
+
     # -- Turnos de conversación -----------------------------------------------
 
     def iniciar_turno(self, hilo: str) -> int:
